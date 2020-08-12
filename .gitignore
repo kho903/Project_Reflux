@@ -1,3 +1,4 @@
 .idea/
 /.idea
 Web/db.sqlite3
+Web/Web/__pycache__

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Reflux{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    {% block extra-style %}{% endblock %}
+</head>
+<body style="padding-top:90px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">Reflux</a>
+
+    <ul class="navbar-nav ml-5 mr-5">
+        <li class="nav-item dropdown mx-1 btn btn-primary">
+            {% if user.is_active %}
+                <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">
+                    <i class="fas fa-user"></i>&ensp;
+                    {% firstof user.get_short_name user.get_username %}&ensp;
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{% url 'logout' %}" class="dropdown-item">LogOut</a>
+                    <a href="{% url 'password_change' %}" class="dropdown-item">Change Password</a>
+                </div>
+            {% else %}
+                <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">
+                    <i class="fas fa-user"></i>&ensp;
+                    Anonymous&ensp;
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{% url 'login' %}" class="dropdown-item">LogIn</a>
+                    <a href="{% url 'register' %}" class="dropdown-item">Register</a>
+                </div>
+            {% endif %}
+        </li>
+    </ul>
+</nav>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/c998a172fe.js"></script>
+{% block extra-script %}{% endblock %}
+
+
+</body>
+</html>
