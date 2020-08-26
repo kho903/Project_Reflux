@@ -4,5 +4,5 @@ from django.urls import path, include
 from chartjs import views
 
 urlpatterns = [
-    path('', views.chartPage, name='chart'),
+    path('', views.indexPage, name='chart'),
 ]

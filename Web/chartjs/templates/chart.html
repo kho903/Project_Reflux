@@ -5,8 +5,13 @@
 {% block title %}home.html{% endblock %}
 
 {% block content %}
-    <h1>Hello World</h1>
-    <canvas id="myChart"></canvas>
+    <div class="col-lg-3" style="float:left; max-height: 650px; max-width: 400px;">
+        <h1>불투수면</h1>
+        <canvas id="myChart" style="width: 300px; height:700px"></canvas>
+    </div>
+    <div class="col-lg-6"></div>
+    <div class="col-lg-3"></div>
+
 {% endblock %}
 
 {% block extra-script %}
@@ -15,16 +20,16 @@
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'bar',
+            type: 'horizontalBar',
 
             // The data for our dataset
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: {{ zone|safe }},
                 datasets: [{
-                    label: 'My First dataset',
+                    label: '불투수면',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45]
+                    data: {{ imp|safe }}
                 }]
             },
 
