@@ -10,35 +10,53 @@
     />
     {% block extra-style %}{% endblock %}
 </head>
-<body style="padding-top:90px;">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<body {% block body %} style="padding-top:90px;" {% endblock %}>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">Reflux</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-    <ul class="navbar-nav ml-5 mr-5">
-        <li class="nav-item dropdown mx-1 btn btn-primary">
-            {% if user.is_active %}
-                <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">
-                    <i class="fas fa-user"></i>&ensp;
-                    {% firstof user.get_short_name user.get_username %}&ensp;
-                </a>
-                <div class="dropdown-menu">
-                    <a href="{% url 'logout' %}" class="dropdown-item">LogOut</a>
-                    <a href="{% url 'password_change' %}" class="dropdown-item">Change Password</a>
-                </div>
-            {% else %}
-                <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">
-                    <i class="fas fa-user"></i>&ensp;
-                    Anonymous&ensp;
-                </a>
-                <div class="dropdown-menu">
-                    <a href="{% url 'login' %}" class="dropdown-item">LogIn</a>
-                    <a href="{% url 'register' %}" class="dropdown-item">Register</a>
-                </div>
-            {% endif %}
+        <li class="nav-item mx-1 btn">
+            <a class="nav-link text-white" href="{% url 'KoreaMap' %}">Map</a>
         </li>
-    </ul>
+        <li class="nav-item mx-1 btn">
+            <a class="nav-link text-white" href="{% url 'BusanMap' %}">Busan Map</a>
+        </li>
+        <li class="nav-item mx-1 btn">
+            <a class="nav-link text-white" href="{% url 'chart' %}">Chart</a>
+        </li>
+
+
+        <ul class="navbar-nav ml-5 mr-5">
+            <li class="nav-item dropdown mx-1 btn">
+                {% if user.is_active %}
+                    <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">
+                        <i class="fas fa-user"></i>&ensp;
+                        {% firstof user.get_short_name user.get_username %}&ensp;
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'logout' %}" class="dropdown-item">LogOut</a>
+                        <a href="{% url 'password_change' %}" class="dropdown-item">Change Password</a>
+                    </div>
+                {% else %}
+                    <a href="#" class="nav-link dropdown-toggle text-white" data-toggle="dropdown">
+                        <i class="fas fa-user"></i>&ensp;
+                        Anonymous&ensp;
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'login' %}" class="dropdown-item">LogIn</a>
+                        <a href="{% url 'register' %}" class="dropdown-item">Register</a>
+                    </div>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
 </nav>
-<div class="container">
+<div class="container" {% block map %}
+
+{% endblock %}>
     {% block content %}
     {% endblock %}
 </div>

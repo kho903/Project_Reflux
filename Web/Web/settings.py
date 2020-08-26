@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
+    'd3_korea_map.apps.D3KoreaMapConfig',
+    'chartjs.apps.ChartjsConfig',
+    'busanmap.apps.BusanmapConfig'
 ]
 
 MIDDLEWARE = [
@@ -119,6 +122,10 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
-
+# STATIC_URL = '/static/'
+#
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATIC_ROOT = ''
+STATIC_URL = '/static/'
+# STATICFILES_DIRS = ( ('map', os.path.join( BASE_DIR, 'static')),)

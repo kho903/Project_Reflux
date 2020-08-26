@@ -20,6 +20,9 @@ from Web.views import UserCreateView, UserCreateDoneTV, HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('map/', include('d3_korea_map.urls')),
+    path('chart/', include('chartjs.urls')),
+    path('busanmap/', include('busanmap.urls')),
 
     path('', HomeView.as_view(), name='home'),
 
