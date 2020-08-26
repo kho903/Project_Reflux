@@ -1,0 +1,141 @@
+{
+  "schema": {
+    "fields": [
+      {
+        "name": "ADM_CD",
+        "type": "integer"
+      },
+      {
+        "name": "ZONE",
+        "type": "string"
+      },
+      {
+        "name": "PUMP_RATIO",
+        "type": "number"
+      },
+      {
+        "name": "IMP_SUR_RATIO",
+        "type": "number"
+      },
+      {
+        "name": "MANHOLES_RATIO",
+        "type": "number"
+      }
+    ],
+    "pandas_version": "0.20.0"
+  },
+  "data": [
+    {
+      "ADM_CD": 2644000000,
+      "ZONE": "강서구",
+      "PUMP_RATIO": 0.000000119,
+      "IMP_SUR_RATIO": 24.36,
+      "MANHOLES_RATIO": 0.0069439637
+    },
+    {
+      "ADM_CD": 2641000000,
+      "ZONE": "금정구",
+      "PUMP_RATIO": 0.0000000304,
+      "IMP_SUR_RATIO": 18.94,
+      "MANHOLES_RATIO": 0.0046888787
+    },
+    {
+      "ADM_CD": 2671000000,
+      "ZONE": "기장군",
+      "PUMP_RATIO": 0.0000000136,
+      "IMP_SUR_RATIO": 7.7,
+      "MANHOLES_RATIO": 0.0016181554
+    },
+    {
+      "ADM_CD": 2629000000,
+      "ZONE": "남구",
+      "PUMP_RATIO": 0.0000002566,
+      "IMP_SUR_RATIO": 51.82,
+      "MANHOLES_RATIO": 0.011568915
+    },
+    {
+      "ADM_CD": 2617000000,
+      "ZONE": "동구",
+      "PUMP_RATIO": 0.0000001982,
+      "IMP_SUR_RATIO": 57.92,
+      "MANHOLES_RATIO": 0.0238850347
+    },
+    {
+      "ADM_CD": 2626000000,
+      "ZONE": "동래구",
+      "PUMP_RATIO": 0.00000024,
+      "IMP_SUR_RATIO": 59.03,
+      "MANHOLES_RATIO": 0.0189862028
+    },
+    {
+      "ADM_CD": 2632000000,
+      "ZONE": "북구",
+      "PUMP_RATIO": 0.0000001509,
+      "IMP_SUR_RATIO": 22.17,
+      "MANHOLES_RATIO": 0.0172082495
+    },
+    {
+      "ADM_CD": 2653000000,
+      "ZONE": "사상구",
+      "PUMP_RATIO": 0.0000003862,
+      "IMP_SUR_RATIO": 40.23,
+      "MANHOLES_RATIO": 0.0139393103
+    },
+    {
+      "ADM_CD": 2638000000,
+      "ZONE": "사하구",
+      "PUMP_RATIO": 0.0000001486,
+      "IMP_SUR_RATIO": 38.2,
+      "MANHOLES_RATIO": 0.0176841435
+    },
+    {
+      "ADM_CD": 2647000000,
+      "ZONE": "연제구",
+      "PUMP_RATIO": 0.0000004115,
+      "IMP_SUR_RATIO": 62.32,
+      "MANHOLES_RATIO": 0.0163868313
+    },
+    {
+      "ADM_CD": 2635000000,
+      "ZONE": "해운대구",
+      "PUMP_RATIO": 0.0000002102,
+      "IMP_SUR_RATIO": 27.63,
+      "MANHOLES_RATIO": 0.016808104
+    },
+    {
+      "ADM_CD": 2611000000,
+      "ZONE": "중구",
+      "PUMP_RATIO": 0.0,
+      "IMP_SUR_RATIO": 81.61,
+      "MANHOLES_RATIO": 0.0256810631
+    },
+    {
+      "ADM_CD": 2620000000,
+      "ZONE": "영도구",
+      "PUMP_RATIO": 0.0,
+      "IMP_SUR_RATIO": 45.77,
+      "MANHOLES_RATIO": 0.0130827068
+    },
+    {
+      "ADM_CD": 2650000000,
+      "ZONE": "수영구",
+      "PUMP_RATIO": 0.0,
+      "IMP_SUR_RATIO": 61.44,
+      "MANHOLES_RATIO": 0.018647343
+    },
+    {
+      "ADM_CD": 2614000000,
+      "ZONE": "서구",
+      "PUMP_RATIO": 0.0,
+      "IMP_SUR_RATIO": 40.57,
+      "MANHOLES_RATIO": 0.0092503536
+    },
+    {
+      "ADM_CD": 2623000000,
+      "ZONE": "부산진구",
+      "PUMP_RATIO": 0.0,
+      "IMP_SUR_RATIO": 45.91,
+      "MANHOLES_RATIO": 0.022098724
+    }
+  ]
+}
