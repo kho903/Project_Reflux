@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}korea{% endblock %}
+{% block extra-script %}
+<link rel="stylesheet" href="{% static 'map/stylesheet/map.css' %}">
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="{% static 'map/script/map.js' %}"></script>
+
+    <script>
+        var KOREA_JSON_DATA_URL = "{% static 'map/skorea-provinces-2018-topo-simple.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'map/testSpots.json' %}";
+
+        function initialize() {
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                d3_korea_map('#map', _data);
+            })
+        }
+    </script>
+
+{% endblock %}
+{% block body %}
+    onload="initialize()"
+{% endblock %}
+
+{% block map %}
+    id="map"
+{% endblock %}
