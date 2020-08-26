@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Busan{% endblock %}
+
+
+{% block extra-script %}
+    <link rel="stylesheet" href="{% static 'busanMap/stylesheet/map.css' %}">
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="{% static 'busanMap/script/map.js' %}"></script>
+
+    <script>
+        var BUSAN_JSON_DATA_URL = "{% static 'busanMap/busan_sig.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'busanMap/testSpots.json' %}";
+
+        function initialize() {
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                busan_map('#map', _data);
+            })
+        }
+    </script>
+
+{% endblock %}
+{% block body %}
+    onload="initialize()"
+{% endblock %}
+
+{% block map %}
+    id="map"
+{% endblock %}
