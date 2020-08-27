@@ -5,25 +5,22 @@
 {% block title %}home.html{% endblock %}
 
 {% block content %}
-    <div class="col-lg-3" style="float:left; max-height: 650px; max-width: 400px;">
-        <h1>불투수면</h1>
-        <canvas id="myChart" style="width: 300px; height:700px"></canvas>
+    <div class="row">
+        <div class="col-lg-3" style="float:left; max-height: 650px; max-width: 400px;">
+            <h1>부산 구별 통계</h1>
+            <canvas id="myChart" style="width: 300px; height:700px"></canvas>
+        </div>
+        <div class="col-lg-6">
+            <h1>컬럼2</h1>
+        </div>
     </div>
-    <div class="col-lg-6"></div>
-    <div class="col-lg-3"></div>
-
 {% endblock %}
 
 {% block extra-script %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
         var ctx = document.getElementById('myChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'horizontalBar',
-
-            // The data for our dataset
-            data: {
+        var mydata = {
                 labels: {{ zone|safe }},
                 datasets: [{
                     label: '불투수면',
@@ -41,10 +38,22 @@
                     borderColor: 'rgb(111, 0, 0)',
                     data: {{ manhole|safe }}
                 }]
-            },
-
-            // Configuration options go here
-            options: {}
+        };
+        var chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: mydata,
+            options: {
+                responsive: true,
+                elements: {
+                    rectangle:{
+                        borderWidth :2,
+                    }
+                },
+                title:{
+                    display: true,
+                    text: '부산 각 구별 통계'
+                }
+            }
         });
     </script>
 {% endblock %}
