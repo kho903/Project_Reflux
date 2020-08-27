@@ -16,6 +16,10 @@ def show_busan_map(request):
 
 def indexPage(request):
     df = pd.read_excel('PIH_merge.xlsx')
+    df_lv = pd.read_excel('F_BIN_WEIGHT_INFO.xlsx')
+    df_lv_v = df_lv[['ZONE', 'F_GRADE']].sort_values(by='ZONE', ascending=True)
+    grade = df_lv_v['F_GRADE'].values.tolist()
+
     df_i = df[['ZONE', 'IMP_SUR_RATIO']].sort_values(by='ZONE', ascending=True)
     df_p = df[['ZONE', 'PUMP_RATIO']].sort_values(by='ZONE', ascending=True)
     df_m = df[['ZONE', 'MANHOLES_RATIO']].sort_values(by='ZONE', ascending=True)
@@ -27,6 +31,7 @@ def indexPage(request):
         'zone': zone,
         'imp': imp,
         'pump': pump,
-        'manhole': manhole
+        'manhole': manhole,
+        'grade': grade
     }
     return render(request, 'busanmap/main.html', context=context)

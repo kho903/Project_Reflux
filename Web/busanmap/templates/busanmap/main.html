@@ -31,30 +31,73 @@
                 label: '불투수면',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
+                xAxisID: 'A',
                 data: {{ imp|safe }}
             }, {
                 label: '펌프',
                 backgroundColor: 'rgb(0, 99, 132)',
                 borderColor: 'rgb(0, 99, 132)',
+                xAxisID: 'B',
                 data: {{ pump|safe }}
             }, {
                 label: '맨홀',
-                backgroundColor: 'rgb(111, 0, 0)',
-                borderColor: 'rgb(111, 0, 0)',
+                backgroundColor: 'rgb(77, 11, 88)',
+                borderColor: 'rgb(77, 11, 88)',
+                xAxisID: 'C',
                 data: {{ manhole|safe }}
+            }, {
+                label: '침수빈도',
+                backgroundColor: 'rgb(255,0,9)',
+                borderColor: 'rgb(255,0,9)',
+                xAxisID: 'D',
+                data: {{ grade|safe }}
             }]
         };
         var chart = new Chart(ctx, {
             type: 'horizontalBar',
             data: mydata,
             options: {
+                scales: {
+                    xAxes: [{
+                        id: 'A',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 100,
+                            min: 0
+                        }
+                    }, {
+                        id: 'B',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 4.3E-07,
+                            min: 0
+                        }
+                    }, {
+                        id: 'C',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 0.028,
+                            min: 0
+                        }
+                    }, {
+                        id: 'D',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 5,
+                            min: 0
+                        }
+                    }]
+                },
                 title: {
                     display: true,
                     text: '부산 각 구별 통계',
                     fontSize: 40
                 },
                 barValueSpacing: 20,
-stackSeries : false
             }
         });
     </script>
