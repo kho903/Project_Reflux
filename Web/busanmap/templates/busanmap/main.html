@@ -14,12 +14,19 @@
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'busanMap/busan_sig.json' %}",
             TEST_SPOT_JSON_DATA_URL = "{% static 'busanMap/testSpots.json' %}";
-
         function initialize() {
+
+            var dict_d = {};
+            for(var i=0; i<mydata.labels.length; i++)
+            {
+                dict_d[mydata.labels[i]] = mydata.datasets[3].data[i];
+            }
+            {#console.log(dict_d);#}
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
-                busan_map('#map', _data);
-            })
+                busan_map('#map', _data, dict_d);
+            });
         }
+
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

@@ -1,4 +1,4 @@
-function busan_map(_mapContainerId, _spots) {
+function busan_map(_mapContainerId, _spots, freq_dict) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
@@ -21,8 +21,8 @@ function busan_map(_mapContainerId, _spots) {
             .attr("width", WIDTH)
             .attr("height", HEIGHT);
 
-        map = svg.append("g").attr("id", "map"),
-            places = svg.append("g").attr("id", "places");
+        map = svg.append("g").attr("id", "map");
+        places = svg.append("g").attr("id", "places");
 
 
         d3.json(BUSAN_JSON_DATA_URL).then(function (_data) {
@@ -37,18 +37,36 @@ function busan_map(_mapContainerId, _spots) {
 
             projection.scale(scale).center(center);
 
-            console.log("center", center);
-            console.log("scale", scale);
+            // var color = d3.scaleThreshold()
+            //     .domain([1,2,9,10,12,14,15])
+            //     .range([/*"rgb(247,251,255)",*/ "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"]);
+
+            var color = [/*"rgb(247,251,255)",*/ "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
+            console.log(freq_dict);
+
+
+
 
             map.selectAll("path")
                 .data(features)
                 .enter().append("path")
+
+                // .attr("style", function(d,i){
+                //     console.log("d는 ");
+                //     return "fill: " + color(i);
+                // })
+                .attr("style", function(d,i){
+                    var each_level = freq_dict[d.properties.SIG_KOR_NM];
+                    return "fill: " + color[each_level];
+                })
+
                 .attr("class", function (d) {
-                    console.log(d);
-                    return "municipality c " + d.properties.code;
+                    console.log(d.properties.SIG_KOR_NM);
+                    return "municipality c " + d.properties.SIG_KOR_NM;
                 })
                 .attr("d", path)
                 .on("click", province_clicked_event);
+
             map.selectAll("text")
                 .data(features)
                 .enter().append("text")
@@ -99,7 +117,7 @@ function busan_map(_mapContainerId, _spots) {
             else
                 zoomLevel = 2;
             CENTERED = d;
-            console.log('centered', CENTERED);
+            // console.log('centered', CENTERED);
         } else {
             x = WIDTH / 2;
             y = HEIGHT / 2;
@@ -120,5 +138,5 @@ function busan_map(_mapContainerId, _spots) {
 
     create(function () {
         spotting_on_map();
-    })
+    });
 }
