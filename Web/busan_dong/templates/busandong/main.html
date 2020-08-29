@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Busan{% endblock %}
+
+
+{% block extra-script %}
+    <link rel="stylesheet" href="{% static 'busanMap/stylesheet/map.css' %}">
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="{% static 'busan_dong/script/map.js' %}"></script>
+
+    <script>
+        var BUSAN_JSON_DATA_URL = "{% static 'busan_dong/emd.json' %}",
+            TEST_SPOT_JSON_DATA_URL = "{% static 'busanMap/testSpots.json' %}";
+        function initialize() {
+
+            var dict_high = {};
+            for(var i=0; i<mydata.labels.length; i++)
+            {
+                dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
+            }
+            console.log(dict_high);
+            d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                busan_dong_map('#map', _data, dict_high);
+            });
+        }
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var mydata = {
+            labels: {{ dong|safe }},
+            datasets: [{
+                label: 'high',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                xAxisID: 'A',
+                data: {{ high|safe }}
+            }/*, {
+                label: '펌프',
+                backgroundColor: 'rgb(0, 99, 132)',
+                borderColor: 'rgb(0, 99, 132)',
+                xAxisID: 'B',
+                data: {{ pump|safe }}
+            }, {
+                label: '맨홀',
+                backgroundColor: 'rgb(77, 11, 88)',
+                borderColor: 'rgb(77, 11, 88)',
+                xAxisID: 'C',
+                data: {{ manhole|safe }}
+            }, {
+                label: '침수빈도',
+                backgroundColor: 'rgb(255,0,9)',
+                borderColor: 'rgb(255,0,9)',
+                xAxisID: 'D',
+                data: {{ grade|safe }}
+            }*/]
+        };
+        var chart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: mydata,
+            options: {
+                scales: {
+                    xAxes: [{
+                        id: 'A',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 65,
+                            min: 0
+                        }
+                    }/*, {
+                        id: 'B',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 4.3E-07,
+                            min: 0
+                        }
+                    }, {
+                        id: 'C',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 0.028,
+                            min: 0
+                        }
+                    }, {
+                        id: 'D',
+                        type: 'linear',
+                        position: 'right',
+                        ticks: {
+                            max: 5,
+                            min: 0
+                        }
+                    }*/]
+                },
+                title: {
+                    display: true,
+                    text: '부산 각 동별 고도',
+                    fontSize: 40
+                },
+                barValueSpacing: 20,
+            }
+        });
+    </script>
+{% endblock %}
+{% block body %}
+    onload="initialize()"
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3" style="float:left; max-height: 1500px; max-width: 400px;">
+            <br><br><br><br><br><br>
+            <canvas id="myChart" style="width: 300px; height:1200px"></canvas>
+        </div>
+        <div class="col-lg-6">
+            <div id="map"></div>
+        </div>
+    </div>
+{% endblock %}

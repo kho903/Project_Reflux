@@ -1,8 +1,8 @@
-function busan_map(_mapContainerId, _spots, freq_dict) {
+function busan_dong_map(_mapContainerId, _spots, dict_high) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
-        busan = 'busan_sig';
+        busan = 'emd';
 
     var projection, path, svg,
         geoJson, features, bounds, center,
@@ -37,27 +37,26 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
 
             projection.scale(scale).center(center);
 
-            // var color = d3.scaleThreshold()
-            //     .domain([1,2,9,10,12,14,15])
-            //     .range([/*"rgb(247,251,255)",*/ "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"]);
 
-            var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
+            // var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
+            var color = d3.scaleLinear()
+                .domain([0, 100])
+                .range(["#f2dfd3", "#964b00"]);
+
+            console.log(color());
 
             map.selectAll("path")
                 .data(features)
                 .enter().append("path")
 
-                // .attr("style", function(d,i){
-                //     console.log("d는 ");
-                //     return "fill: " + color(i);
-                // })
                 .attr("style", function(d,i){
-                    var each_level = freq_dict[d.properties.SIG_KOR_NM];
-                    return "fill: " + color[each_level];
+                    var each_level = dict_high[d.properties.EMD_KOR_NM];
+                    console.log(Math.ceil(each_level));
+                    return "fill: " + color(Math.ceil(each_level));
                 })
 
                 .attr("class", function (d) {
-                    return "municipality c " + d.properties.SIG_KOR_NM;
+                    return "municipality c " + d.properties.EMD_KOR_NM;
                 })
                 .attr("d", path)
                 .on("click", province_clicked_event);
@@ -71,7 +70,7 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
                 .attr("dy", ".35em")
                 .attr("class", "municipality-label")
                 .text(function (d) {
-                    return d.properties.SIG_KOR_NM;
+                    return d.properties.EMD_KOR_NM;
                 });
 
             callback();
@@ -107,7 +106,7 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
             var centroid = path.centroid(d);
             x = centroid[0];
             y = centroid[1];
-            if (d.properties.SIG_KOR_NM == '강서구' || d.properties.SIG_KOR_NM == '기장군')
+            if (d.properties.EMD_KOR_NM == '강서구' || d.properties.EMD_KOR_NM == '기장군')
                 zoomLevel = 1.5;
             else
                 zoomLevel = 2;

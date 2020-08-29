@@ -23,6 +23,7 @@ urlpatterns = [
     path('map/', include('d3_korea_map.urls')),
     path('chart/', include('chartjs.urls')),
     path('busanmap/', include('busanmap.urls')),
+    path('busandong/', include('busan_dong.urls')),
 
     path('', HomeView.as_view(), name='home'),
 

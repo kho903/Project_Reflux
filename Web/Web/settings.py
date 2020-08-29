@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'd3_korea_map.apps.D3KoreaMapConfig',
     'chartjs.apps.ChartjsConfig',
     'busanmap.apps.BusanmapConfig',
+    'busan_dong.apps.BusanDongConfig',
 ]
 
 MIDDLEWARE = [
