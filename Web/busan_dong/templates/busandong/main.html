@@ -13,7 +13,7 @@
 
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'busan_dong/emd.json' %}",
-            TEST_SPOT_JSON_DATA_URL = "{% static 'busanMap/testSpots.json' %}";
+            TEST_SPOT_JSON_DATA_URL = "{% static 'busan_dong/testSpots.json' %}";
         function initialize() {
 
             var dict_high = {};
@@ -21,9 +21,24 @@
             {
                 dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
             }
+            var dict_pump = {};
+            for(var i=0; i<mydata.labels.length; i++)
+            {
+                dict_pump[mydata.labels[i]] = mydata.datasets[1].data[i];
+            }
+            var dict_manhole = {};
+            for(var i=0; i<mydata.labels.length; i++)
+            {
+                dict_manhole[mydata.labels[i]] = mydata.datasets[2].data[i];
+            }
+            var dict_imp = {};
+            for(var i=0; i<mydata.labels.length; i++)
+            {
+                dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
+            }
             console.log(dict_high);
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
-                busan_dong_map('#map', _data, dict_high);
+                busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp);
             });
         }
 
