@@ -5,7 +5,7 @@
 
 
 {% block extra-script %}
-    <link rel="stylesheet" href="{% static 'busanMap/stylesheet/map.css' %}">
+    <link rel="stylesheet" href="{% static 'busan_dong/stylesheet/map.css' %}">
 
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -35,12 +35,13 @@
         var mydata = {
             labels: {{ dong|safe }},
             datasets: [{
-                label: 'high',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                label: '고도',
+                backgroundColor: 'brown',
+                borderColor: 'brown',
                 xAxisID: 'A',
                 data: {{ high|safe }}
-            }/*, {
+            },
+             {
                 label: '펌프',
                 backgroundColor: 'rgb(0, 99, 132)',
                 borderColor: 'rgb(0, 99, 132)',
@@ -52,13 +53,14 @@
                 borderColor: 'rgb(77, 11, 88)',
                 xAxisID: 'C',
                 data: {{ manhole|safe }}
-            }, {
-                label: '침수빈도',
-                backgroundColor: 'rgb(255,0,9)',
-                borderColor: 'rgb(255,0,9)',
+            },
+             {
+                label: '불투수면',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
                 xAxisID: 'D',
-                data: {{ grade|safe }}
-            }*/]
+                data: {{ imp|safe }}
+            }]
         };
         var chart = new Chart(ctx, {
             type: 'horizontalBar',
@@ -73,7 +75,7 @@
                             max: 65,
                             min: 0
                         }
-                    }/*, {
+                    }, {
                         id: 'B',
                         type: 'linear',
                         position: 'right',
@@ -94,14 +96,14 @@
                         type: 'linear',
                         position: 'right',
                         ticks: {
-                            max: 5,
+                            max: 70,
                             min: 0
                         }
-                    }*/]
+                    }]
                 },
                 title: {
                     display: true,
-                    text: '부산 각 동별 고도',
+                    text: '부산 각 동별 통계',
                     fontSize: 40
                 },
                 barValueSpacing: 20,

@@ -8,6 +8,7 @@ def show_busan_map(request):
     def get():
         template = loader.get_template('busandong/main.html')
         return HttpResponse(template.render())
+
     if request.method == 'GET':
         return get()
     else:
@@ -16,9 +17,13 @@ def show_busan_map(request):
 
 def indexP(request):
     df = pd.read_excel('F_Final_PIH_V1.xlsx')
-    df2 = df[['Dong', 'HIGH']].groupby('Dong').mean().reset_index()
+    df2 = df[['Dong', 'HIGH', 'PUMP_RATIO', 'IMP_SUR_RATIO', 'MANHOLES_RATIO']].groupby('Dong').mean().reset_index()
     dong = df2['Dong'].values.tolist()
     high = df2['HIGH'].values.tolist()
+    pump = df2['PUMP_RATIO'].values.tolist()
+    imp = df2['IMP_SUR_RATIO'].values.tolist()
+    manhole = df2['MANHOLES_RATIO'].values.tolist()
+
     # df_i = df[['ZONE', 'IMP_SUR_RATIO']].sort_values(by='ZONE', ascending=True)
     # df_p = df[['ZONE', 'PUMP_RATIO']].sort_values(by='ZONE', ascending=True)
     # df_m = df[['ZONE', 'MANHOLES_RATIO']].sort_values(by='ZONE', ascending=True)
@@ -28,6 +33,9 @@ def indexP(request):
     # manhole = df_m['MANHOLES_RATIO'].values.tolist()
     context = {
         'dong': dong,
-        'high': high
+        'high': high,
+        'pump': pump,
+        'imp': imp,
+        'manhole': manhole,
     }
     return render(request, 'busandong/main.html', context=context)

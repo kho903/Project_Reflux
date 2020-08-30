@@ -69,9 +69,9 @@ function busan_dong_map(_mapContainerId, _spots, dict_high) {
                 })
                 .attr("dy", ".35em")
                 .attr("class", "municipality-label")
-                .text(function (d) {
-                    return d.properties.EMD_KOR_NM;
-                });
+                // .text(function (d) {
+                //     return d.properties.EMD_KOR_NM;
+                // });
 
             callback();
         });

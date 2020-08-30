@@ -1,5 +1,5 @@
 path {
-    fill: gainsboro;
+    fill: #f3f3f3;
     stroke: white;
     stroke-width: 1.5px;
 }
@@ -10,8 +10,4 @@ path:hover {
 
 #map .active {
     fill: #2fa4e7;
-}
-
-text {
-    color: red;
 }
