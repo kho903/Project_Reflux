@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Reflux{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link
             rel="stylesheet"
@@ -12,7 +12,7 @@
 </head>
 <body {% block body %} style="padding-top:90px;" {% endblock %}>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">Reflux</a>
+    <a class="navbar-brand mx-5 mb-0 font-weight-bold font-italic" href="{% url 'home' %}">스마트 침수 예방</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
     </button>

@@ -50,7 +50,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 .enter().append("path")
 
                 // .attr("style", function(d,i){
-                //     var each_level = dict_high[d.properties.EMD_KOR_NM];
+                //     var each_level = dict_high[d.properties. EMD_KOR_NM];
                 //     console.log(Math.ceil(each_level));
                 //     return "fill: " + color(Math.ceil(each_level));
                 // })
@@ -83,7 +83,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             .append("circle")
             .attr("class", "spot")
             .attr("cx", function (d, i) {
-                console.log("프로젝션 ", projection([d.lon, d.lat])[0]);
                 return [100, 130, 160, 190][i];
             })
             .attr("cy", function (d) {
@@ -157,7 +156,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             var centroid = path.centroid(d);
             x = centroid[0];
             y = centroid[1];
-            zoomLevel = 2;
+            zoomLevel = 1.5;
             CENTERED = d;
             // console.log('centered', CENTERED);
         } else {
@@ -170,10 +169,10 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
         map.selectAll("path")
             .classed("active", CENTERED && function (d) {
                 return d === CENTERED;
-            });
+            })
 
         map.transition()
-            .duration(750)
+            .duration(450)
             .attr("transform", "translate(" + WIDTH / 2 + "," + HEIGHT / 2 + ")scale(" + zoomLevel + ")translate(" + -x + "," + -y + ")")
             .style("stroke-width", 1.5 / zoomLevel + "px");
     }

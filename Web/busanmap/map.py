@@ -27,6 +27,8 @@ def indexPage(request):
     imp = df_i['IMP_SUR_RATIO'].values.tolist()
     pump = df_p['PUMP_RATIO'].values.tolist()
     manhole = df_m['MANHOLES_RATIO'].values.tolist()
+
+
     context = {
         'zone': zone,
         'imp': imp,

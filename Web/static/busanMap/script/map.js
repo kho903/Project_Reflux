@@ -1,4 +1,4 @@
-function busan_map(_mapContainerId, _spots, freq_dict) {
+function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
     var WIDTH, HEIGHT,
         CENTERED,
         MAP_CONTAINER_ID = _mapContainerId,
@@ -41,7 +41,8 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
             //     .domain([1,2,9,10,12,14,15])
             //     .range([/*"rgb(247,251,255)",*/ "rgb(222,235,247)", "rgb(198,219,239)", "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"]);
 
-            var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
+            // var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
+            // var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
 
             map.selectAll("path")
                 .data(features)
@@ -51,10 +52,10 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
                 //     console.log("d는 ");
                 //     return "fill: " + color(i);
                 // })
-                .attr("style", function(d,i){
-                    var each_level = freq_dict[d.properties.SIG_KOR_NM];
-                    return "fill: " + color[each_level];
-                })
+                // .attr("style", function(d,i){
+                //     var each_level = dict_d[d.properties.SIG_KOR_NM];
+                //     return "fill: " + color[each_level];
+                // })
 
                 .attr("class", function (d) {
                     return "municipality c " + d.properties.SIG_KOR_NM;
@@ -83,21 +84,72 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
             .data(_spots).enter()
             .append("circle")
             .attr("class", "spot")
-            .attr("cx", function (d) {
-                return projection([d.lon, d.lat])[0];
+            .attr("cx", function (d, i) {
+                return [100, 130, 160, 190][i];
+
             })
             .attr("cy", function (d) {
-                return projection([d.lon, d.lat])[1];
+                return [230];
             })
-            .attr("r", "2px")
-            .attr("fill", "red")
+            .attr("r", "10px")
+            .attr("fill", function (d, i) {
+                return ["rgb(255, 99, 132)", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(255,0,9)"][i]
+            })
             .on('click', spot_clicked_event)
             .transition()
             .ease(d3.easeElastic);
     }
 
-    function spot_clicked_event(d) {
-        alert(d['tag']);
+
+    function spot_clicked_event(d, p) {
+        var color;
+        var each_level;
+        switch (p) {
+            case 0:
+                color = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range(["rgb(255, 240, 243)", "rgb(255, 99, 132)"]);
+                break;
+            case 1:
+                color = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range(["rgb(184, 237, 255)", "rgb(0, 99, 132)"]);
+                break;
+            case 2:
+                color = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range(["rgb(250, 219, 255)", "rgb(77, 11, 88)"]);
+                break;
+            case 3:
+                color = d3.scaleLinear()
+                    .domain([0, 100])
+                    .range(["rgb(255, 240, 243)", "rgb(255,0,9)"]);
+                break;
+        }
+
+        map.selectAll("path")
+            .data(features)
+            // .enter().append("path")
+
+            .attr("style", function (d, i) {
+                console.log(p);
+                switch (p) {
+                    case 0:
+                        each_level = dict_a[d.properties.SIG_KOR_NM] * 1.5;
+                        break;
+                    case 1:
+                        each_level = dict_b[d.properties.SIG_KOR_NM] * 250000000;
+                        break;
+                    case 2:
+                        each_level = dict_c[d.properties.SIG_KOR_NM] * 4000;
+                        break;
+                    case 3:
+                        each_level = dict_d[d.properties.SIG_KOR_NM] * 15;
+                        break;
+                }
+
+                return "fill: " + color(Math.ceil(each_level));
+            })
     }
 
     function province_clicked_event(d) {
@@ -134,4 +186,5 @@ function busan_map(_mapContainerId, _spots, freq_dict) {
     create(function () {
         spotting_on_map();
     });
+
 }
