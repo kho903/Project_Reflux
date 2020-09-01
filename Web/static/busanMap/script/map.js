@@ -71,9 +71,9 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
                 })
                 .attr("dy", ".35em")
                 .attr("class", "municipality-label")
-                .text(function (d) {
-                    return d.properties.SIG_KOR_NM;
-                });
+                // .text(function (d) {
+                //     return d.properties.SIG_KOR_NM;
+                // });
 
             callback();
         });
@@ -84,16 +84,15 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
             .data(_spots).enter()
             .append("circle")
             .attr("class", "spot")
-            .attr("cx", function (d, i) {
-                return [100, 130, 160, 190][i];
-
+            .attr("cx", function (d) {
+                return 100;
             })
-            .attr("cy", function (d) {
-                return [230];
+            .attr("cy", function (d, i) {
+                return [290, 320, 350, 380][i];
             })
             .attr("r", "10px")
             .attr("fill", function (d, i) {
-                return ["rgb(255, 99, 132)", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(255,0,9)"][i]
+                return ["rgb(109,177,0)", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(255,0,9)"][i]
             })
             .on('click', spot_clicked_event)
             .transition()
@@ -108,7 +107,7 @@ function busan_map(_mapContainerId, _spots, dict_a, dict_b, dict_c, dict_d) {
             case 0:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(255, 240, 243)", "rgb(255, 99, 132)"]);
+                    .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
                 break;
             case 1:
                 color = d3.scaleLinear()

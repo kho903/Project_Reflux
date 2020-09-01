@@ -59,7 +59,49 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                     return "municipality c " + d.properties.EMD_KOR_NM;
                 })
                 .attr("d", path)
-                .on("click", province_clicked_event);
+                .on("click", province_clicked_event)
+                .transition().duration(2000).delay(1000)
+                .attr("style", function (d, i) {
+                    color = d3.scaleLinear()
+                        .domain([0, 100])
+                        .range(["#f2dfd3", "#964b00"]);
+                    each_level = dict_high[d.properties.EMD_KOR_NM] * 2;
+                    return "fill: " + color(Math.ceil(each_level));
+                })
+                .transition().duration(3000)
+                .attr("style", function (d, i) {
+
+                    color = d3.scaleLinear()
+                        .domain([0, 100])
+                        .range(["rgb(184, 237, 255)", "rgb(0, 99, 132)"]);
+
+                    each_level = dict_pump[d.properties.EMD_KOR_NM] * 500000000;
+                    return "fill: " + color(Math.ceil(each_level));
+
+                })
+                .transition().duration(4000)
+                .attr("style", function (d, i) {
+                    color = d3.scaleLinear()
+                        .domain([0, 100])
+                        .range(["rgb(250, 219, 255)", "rgb(77, 11, 88)"]);
+
+                    each_level = dict_manhole[d.properties.EMD_KOR_NM] * 5000;
+                    return "fill: " + color(Math.ceil(each_level));
+
+                })
+
+                .transition().duration(5000)
+                .attr("style", function (d, i) {
+                    color = d3.scaleLinear()
+                        .domain([0, 100])
+                    .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
+
+                    each_level = dict_imp[d.properties.EMD_KOR_NM] * 2.5;
+
+                    return "fill: " + color(Math.ceil(each_level));
+                })
+
+            ;
 
             map.selectAll("text")
                 .data(features)
@@ -90,7 +132,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             })
             .attr("r", "10px")
             .attr("fill", function (d, i) {
-                return ["brown", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(255, 99, 132)"][i]
+                return ["brown", "rgb(0, 99, 132)", "rgb(77, 11, 88)", "rgb(109,177,0)"][i]
             })
             .on('click', spot_clicked_event)
             .transition()
@@ -120,7 +162,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             case 3:
                 color = d3.scaleLinear()
                     .domain([0, 100])
-                    .range(["rgb(255, 240, 243)", "rgb(255, 99, 132)"]);
+                    .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
                 break;
         }
 
@@ -132,21 +174,71 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 console.log(p);
                 switch (p) {
                     case 0:
-                        each_level = dict_high[d.properties.EMD_KOR_NM]*2;
+                        each_level = dict_high[d.properties.EMD_KOR_NM] * 2;
                         break;
                     case 1:
                         each_level = dict_pump[d.properties.EMD_KOR_NM] * 500000000;
                         break;
                     case 2:
-                        each_level = dict_manhole[d.properties.EMD_KOR_NM]*5000;
+                        each_level = dict_manhole[d.properties.EMD_KOR_NM] * 5000;
                         break;
                     case 3:
-                        each_level = dict_imp[d.properties.EMD_KOR_NM]*2.5;
+                        each_level = dict_imp[d.properties.EMD_KOR_NM] * 2.5;
                         break;
                 }
                 return "fill: " + color(Math.ceil(each_level));
             })
     }
+
+
+    // function changeFillColor(d) {
+    //     var color;
+    //     var each_level;
+    //
+    //     map.selectAll("path")
+    //         .data(features)
+    //         // .enter().append("path")
+    //         .transition().duration(0)
+    //         .attr("style", function (d, i) {
+    //             color = d3.scaleLinear()
+    //                 .domain([0, 100])
+    //                 .range(["#f2dfd3", "#964b00"]);
+    //             each_level = dict_high[d.properties.EMD_KOR_NM] * 2;
+    //             return "fill: " + color(Math.ceil(each_level));
+    //         })
+    //         .transition().duration(10)
+    //         .attr("style", function (d, i) {
+    //
+    //             color = d3.scaleLinear()
+    //                 .domain([0, 100])
+    //                 .range(["rgb(184, 237, 255)", "rgb(0, 99, 132)"]);
+    //
+    //             each_level = dict_pump[d.properties.EMD_KOR_NM] * 500000000;
+    //             return "fill: " + color(Math.ceil(each_level));
+    //
+    //         })
+    //         .transition().duration(20)
+    //         .attr("style", function (d, i) {
+    //             color = d3.scaleLinear()
+    //                 .domain([0, 100])
+    //                 .range(["rgb(250, 219, 255)", "rgb(77, 11, 88)"]);
+    //
+    //             each_level = dict_manhole[d.properties.EMD_KOR_NM] * 5000;
+    //             return "fill: " + color(Math.ceil(each_level));
+    //
+    //         })
+    //
+    //         .transition().duration(30)
+    //         .attr("style", function (d, i) {
+    //             color = d3.scaleLinear()
+    //                 .domain([0, 100])
+    //                 .range(["rgb(255, 240, 243)", "rgb(255, 99, 132)"]);
+    //
+    //             each_level = dict_imp[d.properties.EMD_KOR_NM] * 2.5;
+    //
+    //             return "fill: " + color(Math.ceil(each_level));
+    //         })
+    // }
 
 
     function province_clicked_event(d) {
@@ -169,7 +261,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
         map.selectAll("path")
             .classed("active", CENTERED && function (d) {
                 return d === CENTERED;
-            })
+            });
 
         map.transition()
             .duration(450)

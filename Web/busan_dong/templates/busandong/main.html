@@ -9,6 +9,7 @@
 
     <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="http://d3js.org/topojson.v1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-transition/1.1.1/d3-transition.js"></script>
     <script src="{% static 'busan_dong/script/map.js' %}"></script>
 
     <script>
@@ -71,8 +72,8 @@
             },
              {
                 label: '불투수면',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(109,177,0)',
+                borderColor: 'rgb(109,177,0)',
                 xAxisID: 'D',
                 data: {{ imp|safe }}
             }]
