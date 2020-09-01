@@ -15,26 +15,23 @@
     <script>
         var BUSAN_JSON_DATA_URL = "{% static 'busan_dong/emd.json' %}",
             TEST_SPOT_JSON_DATA_URL = "{% static 'busan_dong/testSpots.json' %}";
+
         function initialize() {
 
             var dict_high = {};
-            for(var i=0; i<mydata.labels.length; i++)
-            {
+            for (var i = 0; i < mydata.labels.length; i++) {
                 dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
             }
             var dict_pump = {};
-            for(var i=0; i<mydata.labels.length; i++)
-            {
+            for (var i = 0; i < mydata.labels.length; i++) {
                 dict_pump[mydata.labels[i]] = mydata.datasets[1].data[i];
             }
             var dict_manhole = {};
-            for(var i=0; i<mydata.labels.length; i++)
-            {
+            for (var i = 0; i < mydata.labels.length; i++) {
                 dict_manhole[mydata.labels[i]] = mydata.datasets[2].data[i];
             }
             var dict_imp = {};
-            for(var i=0; i<mydata.labels.length; i++)
-            {
+            for (var i = 0; i < mydata.labels.length; i++) {
                 dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
             }
             console.log(dict_high);
@@ -57,27 +54,29 @@
                 xAxisID: 'A',
                 data: {{ high|safe }}
             },
-             {
-                label: '펌프',
-                backgroundColor: 'rgb(0, 99, 132)',
-                borderColor: 'rgb(0, 99, 132)',
-                xAxisID: 'B',
-                data: {{ pump|safe }}
-            }, {
-                label: '맨홀',
-                backgroundColor: 'rgb(77, 11, 88)',
-                borderColor: 'rgb(77, 11, 88)',
-                xAxisID: 'C',
-                data: {{ manhole|safe }}
-            },
-             {
-                label: '불투수면',
-                backgroundColor: 'rgb(109,177,0)',
-                borderColor: 'rgb(109,177,0)',
-                xAxisID: 'D',
-                data: {{ imp|safe }}
-            }]
+                {
+                    label: '펌프',
+                    backgroundColor: 'rgb(0, 99, 132)',
+                    borderColor: 'rgb(0, 99, 132)',
+                    xAxisID: 'B',
+                    data: {{ pump|safe }}
+                }, {
+                    label: '맨홀',
+                    backgroundColor: 'rgb(77, 11, 88)',
+                    borderColor: 'rgb(77, 11, 88)',
+                    xAxisID: 'C',
+                    data: {{ manhole|safe }}
+                },
+                {
+                    label: '불투수면',
+                    backgroundColor: 'rgb(109,177,0)',
+                    borderColor: 'rgb(109,177,0)',
+                    xAxisID: 'D',
+                    data: {{ imp|safe }}
+                }]
         };
+
+
         var chart = new Chart(ctx, {
             type: 'horizontalBar',
             data: mydata,
@@ -123,8 +122,16 @@
                     fontSize: 40
                 },
                 barValueSpacing: 20,
+                legend: {
+                    display: true,
+                },
+
             }
         });
+        chart.data.datasets.forEach(function (d) {
+            d.hidden = !d.hidden;
+        });
+        chart.update();
     </script>
 {% endblock %}
 {% block body %}
@@ -135,6 +142,7 @@
     <div class="row">
         <div class="col-lg-3" style="float:left; max-height: 1500px; max-width: 400px;">
             <br><br><br><br><br><br>
+{#            <button id="toggle">show/hide all</button>#}
             <canvas id="myChart" style="width: 300px; height:1200px"></canvas>
         </div>
         <div class="col-lg-6">

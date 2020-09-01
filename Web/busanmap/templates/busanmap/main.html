@@ -122,6 +122,10 @@
                 barValueSpacing: 20,
             }
         });
+        chart.data.datasets.forEach(function (d) {
+            d.hidden = !d.hidden;
+        });
+        chart.update();
     </script>
 {% endblock %}
 {% block body %}
