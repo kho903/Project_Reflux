@@ -12,7 +12,7 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
         HEIGHT = window.innerHeight;
         WIDTH = 1200;
 
-        console.log('Map scale', {'height': HEIGHT, 'width': WIDTH});
+        // console.log('Map scale', {'height': HEIGHT, 'width': WIDTH});
 
         projection = d3.geoMercator().translate([WIDTH / 2, HEIGHT / 2]);
         path = d3.geoPath().projection(projection);
@@ -38,23 +38,33 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             projection.scale(scale).center(center);
 
 
-            // var color = [/*"rgb(247,251,255)", */ "rgb(222,235,247)", /*"rgb(198,219,239)",*/ "rgb(158,202,225)", "rgb(107,174,214)", "rgb(66,146,198)", "rgb(33,113,181)", "rgb(8,81,156)", "rgb(8,48,107)", "rgb(3,19,43)"];
             var color = d3.scaleLinear()
                 .domain([0, 100])
                 .range(["#f2dfd3", "#964b00"]);
 
-            console.log(color());
+            // tooltip 생성(map 각 동별로 hover 시 동 이름 띄우기)
+            var tooltip = d3.select("#map").append("g")
+                .attr('class', 'hidden tooltip');
 
             map.selectAll("path")
                 .data(features)
                 .enter().append("path")
-
-                // .attr("style", function(d,i){
-                //     var each_level = dict_high[d.properties. EMD_KOR_NM];
-                //     console.log(Math.ceil(each_level));
-                //     return "fill: " + color(Math.ceil(each_level));
-                // })
-
+                .attr('class', function (d) {
+                    return 'province ' + d.properties.EMD_KOR_NM;
+                })
+                .attr('d', path)
+                .on('mousemove', function (d) {
+                    var mouse = d3.mouse(svg.node()).map(function (d) {
+                        return parseInt(d);
+                    });
+                    tooltip.classed('hidden', false)
+                        .attr('style', 'left:' + (mouse[0] + 15) +
+                            'px; top:' + (mouse[1] - 35) + 'px')
+                        .text(d.properties.EMD_KOR_NM);
+                })
+                .on('mouseout', function () {
+                    // tooltip.classed('hidden', true);
+                })
                 .attr("class", function (d) {
                     return "municipality c " + d.properties.EMD_KOR_NM;
                 })
@@ -77,7 +87,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
 
                     each_level = dict_pump[d.properties.EMD_KOR_NM] * 500000000;
                     return "fill: " + color(Math.ceil(each_level));
-
                 })
                 .transition().duration(4000)
                 .attr("style", function (d, i) {
@@ -94,13 +103,12 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 .attr("style", function (d, i) {
                     color = d3.scaleLinear()
                         .domain([0, 100])
-                    .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
+                        .range(["rgb(241,255,200)", "rgb(109,177,0)"]);
 
                     each_level = dict_imp[d.properties.EMD_KOR_NM] * 2.5;
 
                     return "fill: " + color(Math.ceil(each_level));
                 })
-
             ;
 
             map.selectAll("text")
@@ -111,9 +119,11 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 })
                 .attr("dy", ".35em")
                 .attr("class", "municipality-label")
+            // 지도에 모든 동 이름을 표시 (동이 너무 많아 복잡)
             // .text(function (d) {
             //     return d.properties.EMD_KOR_NM;
-            // });
+            // })
+            ;
 
             callback();
         });
@@ -140,7 +150,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
     }
 
     function spot_clicked_event(d, p) {
-        console.log(p);
         var color;
         var each_level;
         switch (p) {
@@ -171,7 +180,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             // .enter().append("path")
 
             .attr("style", function (d, i) {
-                console.log(p);
                 switch (p) {
                     case 0:
                         each_level = dict_high[d.properties.EMD_KOR_NM] * 2;
@@ -250,7 +258,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             y = centroid[1];
             zoomLevel = 1.5;
             CENTERED = d;
-            // console.log('centered', CENTERED);
         } else {
             x = WIDTH / 2;
             y = HEIGHT / 2;

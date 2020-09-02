@@ -17,25 +17,26 @@
             TEST_SPOT_JSON_DATA_URL = "{% static 'busan_dong/testSpots.json' %}";
 
         function initialize() {
+            // 각 데이터들 (아래 script에 있는 mydata (차트 만들 때 썼던 데이터) )를 딕셔너리로 만들어 busan_dong_map에 인자로 넘겨줌
 
-            var dict_high = {};
+            var dict_high = {}; // 고도
             for (var i = 0; i < mydata.labels.length; i++) {
                 dict_high[mydata.labels[i]] = mydata.datasets[0].data[i];
             }
-            var dict_pump = {};
+            var dict_pump = {}; // 펌프
             for (var i = 0; i < mydata.labels.length; i++) {
                 dict_pump[mydata.labels[i]] = mydata.datasets[1].data[i];
             }
-            var dict_manhole = {};
+            var dict_manhole = {}; // 맨홀
             for (var i = 0; i < mydata.labels.length; i++) {
                 dict_manhole[mydata.labels[i]] = mydata.datasets[2].data[i];
             }
-            var dict_imp = {};
+            var dict_imp = {}; // 불투수면
             for (var i = 0; i < mydata.labels.length; i++) {
                 dict_imp[mydata.labels[i]] = mydata.datasets[3].data[i];
             }
-            console.log(dict_high);
             d3.json(TEST_SPOT_JSON_DATA_URL).then(function (_data) {
+                // map.js
                 busan_dong_map('#map', _data, dict_high, dict_pump, dict_manhole, dict_imp);
             });
         }
@@ -82,6 +83,7 @@
             data: mydata,
             options: {
                 scales: {
+                    // x축의 범위를 각각 지정해 줌
                     xAxes: [{
                         id: 'A',
                         type: 'linear',
