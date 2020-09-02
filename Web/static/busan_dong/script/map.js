@@ -57,13 +57,14 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                     var mouse = d3.mouse(svg.node()).map(function (d) {
                         return parseInt(d);
                     });
+                    console.log(mouse);
                     tooltip.classed('hidden', false)
-                        .attr('style', 'left:' + (mouse[0] + 15) +
+                        .attr('style', 'left:' + (mouse[0] + 35) +
                             'px; top:' + (mouse[1] - 35) + 'px')
                         .text(d.properties.EMD_KOR_NM);
                 })
                 .on('mouseout', function () {
-                    // tooltip.classed('hidden', true);
+                    tooltip.classed('hidden', true);
                 })
                 .attr("class", function (d) {
                     return "municipality c " + d.properties.EMD_KOR_NM;
