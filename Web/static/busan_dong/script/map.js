@@ -12,8 +12,6 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
         HEIGHT = window.innerHeight;
         WIDTH = 1200;
 
-        // console.log('Map scale', {'height': HEIGHT, 'width': WIDTH});
-
         projection = d3.geoMercator().translate([WIDTH / 2, HEIGHT / 2]);
         path = d3.geoPath().projection(projection);
 
@@ -71,6 +69,10 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 })
                 .attr("d", path)
                 .on("click", province_clicked_event)
+                // 지도 애니메이션 duration() 시간별로 색깔 각각 지정 후 main.html 에서
+                // 받아온 각 딕셔너리별로 each_level을 정해서 색 변경
+                // color = d3.scleLinear() 함수는 range(시작색, 끝색) 으로 각각 100단계로 쪼개서 각각의 색을 지정
+                // each_level = dict_**[d.properties.EMD_KOR_NM] 뒤에 수치를 곱하여 [0, 100]단위로 임의 정규화
                 .transition().duration(2000).delay(1000)
                 .attr("style", function (d, i) {
                     color = d3.scaleLinear()
@@ -129,7 +131,8 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
             callback();
         });
     }
-
+    // 지도 위 동그라미
+    // 각각 눌렀을 때 고도, 펌프, 맨홀, 불투수면 비 지도에 표시
     function spotting_on_map() {
         var circles = map.selectAll("circle")
             .data(_spots).enter()
@@ -198,58 +201,8 @@ function busan_dong_map(_mapContainerId, _spots, dict_high, dict_pump, dict_manh
                 return "fill: " + color(Math.ceil(each_level));
             })
     }
-
-
-    // function changeFillColor(d) {
-    //     var color;
-    //     var each_level;
-    //
-    //     map.selectAll("path")
-    //         .data(features)
-    //         // .enter().append("path")
-    //         .transition().duration(0)
-    //         .attr("style", function (d, i) {
-    //             color = d3.scaleLinear()
-    //                 .domain([0, 100])
-    //                 .range(["#f2dfd3", "#964b00"]);
-    //             each_level = dict_high[d.properties.EMD_KOR_NM] * 2;
-    //             return "fill: " + color(Math.ceil(each_level));
-    //         })
-    //         .transition().duration(10)
-    //         .attr("style", function (d, i) {
-    //
-    //             color = d3.scaleLinear()
-    //                 .domain([0, 100])
-    //                 .range(["rgb(184, 237, 255)", "rgb(0, 99, 132)"]);
-    //
-    //             each_level = dict_pump[d.properties.EMD_KOR_NM] * 500000000;
-    //             return "fill: " + color(Math.ceil(each_level));
-    //
-    //         })
-    //         .transition().duration(20)
-    //         .attr("style", function (d, i) {
-    //             color = d3.scaleLinear()
-    //                 .domain([0, 100])
-    //                 .range(["rgb(250, 219, 255)", "rgb(77, 11, 88)"]);
-    //
-    //             each_level = dict_manhole[d.properties.EMD_KOR_NM] * 5000;
-    //             return "fill: " + color(Math.ceil(each_level));
-    //
-    //         })
-    //
-    //         .transition().duration(30)
-    //         .attr("style", function (d, i) {
-    //             color = d3.scaleLinear()
-    //                 .domain([0, 100])
-    //                 .range(["rgb(255, 240, 243)", "rgb(255, 99, 132)"]);
-    //
-    //             each_level = dict_imp[d.properties.EMD_KOR_NM] * 2.5;
-    //
-    //             return "fill: " + color(Math.ceil(each_level));
-    //         })
-    // }
-
-
+    
+    // 클릭시 확대 이벤트
     function province_clicked_event(d) {
         var x, y, zoomLevel;
 
